@@ -385,10 +385,10 @@ getWAddressBalance :: WalletWebMode m => CWAddressMeta -> m Coin
 getWAddressBalance addr =
     getBalance <=< decodeCIdOrFail $ cwamId addr
 
-getWAddress :: WalletWebMode m => CWAddressMeta -> m CAddress
-getWAddress cAddr@CWAddressMeta{..} = do
+getWAddress :: WalletWebMode m => Bool -> CWAddressMeta -> m CAddress
+getWAddress isChangeAddress cAddr@CWAddressMeta{..} = do
     balance <- getWAddressBalance cAddr
-    return $ CAddress cwamId (mkCCoin balance) (balance > minBound)
+    return $ CAddress cwamId (mkCCoin balance) (balance > minBound) isChangeAddress
 
 getAccountAddrsOrThrow
     :: (WebWalletModeDB m, MonadThrow m)
@@ -409,7 +409,7 @@ getAccount accId = do
     let modAccs = S.fromList $ insertions ++ MM.deletions modifier
     let filteredAccs = filter (`S.notMember` modAccs) addrs
     let mergedAccAddrs = filteredAccs ++ insertions
-    mergedAccs <- mapM getWAddress mergedAccAddrs
+    mergedAccs <- mapM (getWAddress False) mergedAccAddrs
     balance <- mkCCoin . unsafeIntegerToCoin . sumCoins <$>
                mapM getWAddressBalance mergedAccAddrs
     meta <- getAccountMeta accId >>= maybeThrow noWallet
@@ -571,7 +571,7 @@ sendMoney sendActions passphrase moneySource dstDistr title desc = do
         | remaining == mkCoin 0 = return Nothing
         | otherwise = do
             relatedWallet <- getMoneySourceAccount moneySource
-            account       <- newWAddress RandomSeed passphrase relatedWallet
+            account       <- newWChangeAddress {- True implies that this is a change address -} RandomSeed passphrase relatedWallet
             remAddr       <- decodeCIdOrFail (cadId account)
             let remTx = TxOutAux (TxOut remAddr remaining) []
             return $ Just remTx
@@ -691,20 +691,30 @@ addHistoryTx accId title desc wtx@THEntry{..} = do
     meta' <- fromMaybe meta <$> getTxMeta accId cId
     return $ mkCTx diff wtx meta'
 
-
-newWAddress
+newWAddress, newWChangeAddress
     :: WalletWebMode m
     => AddrGenSeed
     -> PassPhrase
     -> AccountId
     -> m CAddress
-newWAddress addGenSeed passphrase accId = do
+newWAddress = newWAddress' False
+newWChangeAddress = newWAddress' True
+
+-- Internal function
+newWAddress'
+    :: WalletWebMode m
+    => Bool
+    -> AddrGenSeed
+    -> PassPhrase
+    -> AccountId
+    -> m CAddress
+newWAddress' isChangeAddress addGenSeed passphrase accId = do
     -- check wallet exists
     _ <- getAccount accId
 
     cAccAddr <- genUniqueAccountAddress addGenSeed passphrase accId
     addWAddress cAccAddr
-    getWAddress cAccAddr
+    getWAddress isChangeAddress cAccAddr
 
 newAccount :: WalletWebMode m => AddrGenSeed -> PassPhrase -> CAccountInit -> m CAccount
 newAccount addGenSeed passphrase CAccountInit {..} = do
