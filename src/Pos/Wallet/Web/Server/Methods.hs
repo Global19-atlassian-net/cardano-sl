@@ -311,6 +311,8 @@ servantHandlers sendActions =
     :<|>
      newWallet
     :<|>
+     updateWallet
+    :<|>
      newWallet
     :<|>
      renameWSet
@@ -744,6 +746,11 @@ newWallet passphrase CWalletInit {..} = do
     let CWalletMeta {..} = cwInitMeta
     cAddr <- genSaveRootAddress passphrase cwBackupPhrase
     createWalletSafe cAddr cwInitMeta
+
+updateWallet :: WalletWebMode m => CId Wal -> CWalletMeta -> m CWallet
+updateWallet wId wMeta = do
+    setWalletMeta wId wMeta
+    getWallet wId
 
 updateAccount :: WalletWebMode m => AccountId -> CAccountMeta -> m CAccount
 updateAccount accId wMeta = do

@@ -116,6 +116,9 @@ getWallets = getR $ noQueryParam ["wallets"]
 newWallet :: forall eff. Maybe CPassPhrase -> CWalletInit -> Aff (ajax :: AJAX | eff) CWallet
 newWallet pass = postRBody $ queryParams ["wallets", "new"] [qParam "passphrase" $ _passPhrase <$> pass]
 
+updateWallet :: forall eff. CId Wal -> CWalletMeta -> Aff (ajax :: AJAX | eff) CWallet
+updateWallet wId = putRBody $ noQueryParam ["wallets", walletAddressToUrl wId]
+
 restoreWallet :: forall eff. Maybe CPassPhrase -> CWalletInit -> Aff (ajax :: AJAX | eff) CWallet
 restoreWallet pass = postRBody $ queryParams ["wallets", "restore"] [qParam "passphrase" $ _passPhrase <$> pass]
 
