@@ -438,9 +438,9 @@ library
                        -O2
 
   -- linker speed up for linux
-  if os(linux)
-    ghc-options:       -optl-fuse-ld=gold
-    ld-options:        -fuse-ld=gold
+  --if os(linux)
+  --  ghc-options:       -optl-fuse-ld=gold
+  --  ld-options:        -fuse-ld=gold
 
   default-extensions:   DeriveDataTypeable
                         DeriveGeneric
@@ -517,9 +517,9 @@ executable cardano-node
                        -O2
 
   -- linker speed up for linux
-  if os(linux)
-    ghc-options:       -optl-fuse-ld=gold
-    ld-options:        -fuse-ld=gold
+  --if os(linux)
+  --  ghc-options:       -optl-fuse-ld=gold
+  --  ld-options:        -fuse-ld=gold
 
   default-extensions:   DeriveDataTypeable
                         DeriveGeneric
@@ -580,9 +580,9 @@ executable cardano-analyzer
                        -O2
 
   -- linker speed up for linux
-  if os(linux)
-    ghc-options:       -optl-fuse-ld=gold
-    ld-options:        -fuse-ld=gold
+  --if os(linux)
+  --  ghc-options:       -optl-fuse-ld=gold
+  --  ld-options:        -fuse-ld=gold
 
   default-extensions:   DeriveDataTypeable
                         DeriveGeneric
@@ -654,9 +654,9 @@ executable cardano-wallet
                        -O2
 
   -- linker speed up for linux
-  if os(linux)
-    ghc-options:       -optl-fuse-ld=gold
-    ld-options:        -fuse-ld=gold
+  --if os(linux)
+  --  ghc-options:       -optl-fuse-ld=gold
+  --  ld-options:        -fuse-ld=gold
 
   default-extensions:   DeriveDataTypeable
                         DeriveGeneric
@@ -714,9 +714,9 @@ executable cardano-wallet-hs2purs
                        -O2
 
   -- linker speed up for linux
-  if os(linux)
-    ghc-options:       -optl-fuse-ld=gold
-    ld-options:        -fuse-ld=gold
+  --if os(linux)
+  --  ghc-options:       -optl-fuse-ld=gold
+  --  ld-options:        -fuse-ld=gold
 
   default-extensions:   DeriveDataTypeable
                         DeriveGeneric
@@ -801,9 +801,9 @@ executable cardano-smart-generator
                        -O2
 
   -- linker speed up for linux
-  if os(linux)
-    ghc-options:       -optl-fuse-ld=gold
-    ld-options:        -fuse-ld=gold
+  --if os(linux)
+  --  ghc-options:       -optl-fuse-ld=gold
+  --  ld-options:        -fuse-ld=gold
 
   default-extensions:   DeriveDataTypeable
                         DeriveGeneric
@@ -874,9 +874,9 @@ executable cardano-dht-keygen
                        -O2
 
   -- linker speed up for linux
-  if os(linux)
-    ghc-options:       -optl-fuse-ld=gold
-    ld-options:        -fuse-ld=gold
+  --if os(linux)
+  --  ghc-options:       -optl-fuse-ld=gold
+  --  ld-options:        -fuse-ld=gold
 
   default-extensions:   DeriveDataTypeable
                         DeriveGeneric
@@ -933,9 +933,9 @@ executable cardano-swagger
                        -O2
 
   -- linker speed up for linux
-  if os(linux)
-    ghc-options:       -optl-fuse-ld=gold
-    ld-options:        -fuse-ld=gold
+  --if os(linux)
+  --  ghc-options:       -optl-fuse-ld=gold
+  --  ld-options:        -fuse-ld=gold
 
   default-extensions:   NoImplicitPrelude
                         BangPatterns
@@ -968,9 +968,9 @@ executable cardano-checks
                        -O2
 
   -- linker speed up for linux
-  if os(linux)
-    ghc-options:       -optl-fuse-ld=gold
-    ld-options:        -fuse-ld=gold
+  --if os(linux)
+  --  ghc-options:       -optl-fuse-ld=gold
+  --  ld-options:        -fuse-ld=gold
 
   default-extensions:  OverloadedStrings
                        BangPatterns
@@ -1000,9 +1000,9 @@ executable cardano-genupdate
                        -O2
 
   -- linker speed up for linux
-  if os(linux)
-    ghc-options:       -optl-fuse-ld=gold
-    ld-options:        -fuse-ld=gold
+  --if os(linux)
+  --  ghc-options:       -optl-fuse-ld=gold
+  --  ld-options:        -fuse-ld=gold
 
   default-extensions:  OverloadedStrings
                        NoImplicitPrelude
@@ -1047,9 +1047,9 @@ executable cardano-keygen
                        -O2
 
   -- linker speed up for linux
-  if os(linux)
-    ghc-options:       -optl-fuse-ld=gold
-    ld-options:        -fuse-ld=gold
+  --if os(linux)
+  --  ghc-options:       -optl-fuse-ld=gold
+  --  ld-options:        -fuse-ld=gold
 
   default-extensions:   DeriveDataTypeable
                         DeriveGeneric
@@ -1105,9 +1105,9 @@ executable cardano-launcher
                        -O2
 
   -- linker speed up for linux
-  if os(linux)
-    ghc-options:       -optl-fuse-ld=gold
-    ld-options:        -fuse-ld=gold
+  --if os(linux)
+  --  ghc-options:       -optl-fuse-ld=gold
+  --  ld-options:        -fuse-ld=gold
 
   default-extensions:  OverloadedStrings
                        RecordWildCards
@@ -1143,9 +1143,9 @@ executable cardano-addr-convert
                        -O2
 
   -- linker speed up for linux
-  if os(linux)
-    ghc-options:       -optl-fuse-ld=gold
-    ld-options:        -fuse-ld=gold
+  --if os(linux)
+  --  ghc-options:       -optl-fuse-ld=gold
+  --  ld-options:        -fuse-ld=gold
 
   default-extensions:   DeriveDataTypeable
                         DeriveGeneric
@@ -1189,9 +1189,9 @@ executable cardano-cli-docs
                        -O2
 
   -- linker speed up for linux
-  if os(linux)
-    ghc-options:       -optl-fuse-ld=gold
-    ld-options:        -fuse-ld=gold
+  --if os(linux)
+  --  ghc-options:       -optl-fuse-ld=gold
+  --  ld-options:        -fuse-ld=gold
 
   default-extensions:   NoImplicitPrelude
                         BangPatterns
@@ -1292,9 +1292,9 @@ test-suite cardano-test
                        -with-rtsopts=-N
 
   -- linker speed up for linux
-  if os(linux)
-    ghc-options:       -optl-fuse-ld=gold
-    ld-options:        -fuse-ld=gold
+  --if os(linux)
+  --  ghc-options:       -optl-fuse-ld=gold
+  --  ld-options:        -fuse-ld=gold
 
   default-extensions:   DeriveDataTypeable
                         DeriveGeneric
@@ -1351,9 +1351,9 @@ benchmark cardano-bench-criterion
                        -O2
 
   -- linker speed up for linux
-  if os(linux)
-    ghc-options:       -optl-fuse-ld=gold
-    ld-options:        -fuse-ld=gold
+  --if os(linux)
+  --  ghc-options:       -optl-fuse-ld=gold
+  --  ld-options:        -fuse-ld=gold
 
   default-extensions:   DeriveDataTypeable
                         DeriveGeneric
