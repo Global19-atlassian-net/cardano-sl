@@ -571,7 +571,7 @@ sendMoney sendActions passphrase moneySource dstDistr title desc = do
         | remaining == mkCoin 0 = return Nothing
         | otherwise = do
             relatedWallet <- getMoneySourceAccount moneySource
-            account       <- newWChangeAddress {- True implies that this is a change address -} RandomSeed passphrase relatedWallet
+            account       <- newWChangeAddress RandomSeed passphrase relatedWallet
             remAddr       <- decodeCIdOrFail (cadId account)
             let remTx = TxOutAux (TxOut remAddr remaining) []
             return $ Just remTx
