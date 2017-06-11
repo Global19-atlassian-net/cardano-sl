@@ -333,7 +333,7 @@ servantHandlers sendActions =
      deleteAccount
     :<|>
 
-     newWAddress RandomSeed
+     newAddress RandomSeed
     :<|>
 
      isValidAddress
@@ -579,7 +579,7 @@ sendMoney sendActions passphrase moneySource dstDistr title desc = do
         | remaining == mkCoin 0 = return Nothing
         | otherwise = do
             relatedWallet <- getMoneySourceAccount moneySource
-            account       <- newWAddress RandomSeed passphrase relatedWallet
+            account       <- newAddress RandomSeed passphrase relatedWallet
             remAddr       <- decodeCIdOrFail (cadId account)
             let remTx = TxOutAux (TxOut remAddr remaining) []
             return $ Just remTx
@@ -704,13 +704,13 @@ addHistoryTx accId title desc wtx@THEntry{..} = do
     accAddrs <- map cwamId <$> getAccountAddrsOrThrow Ever accId
     return $ mkCTxs diff wtx meta' accAddrs
 
-newWAddress
+newAddress
     :: WalletWebMode m
     => AddrGenSeed
     -> PassPhrase
     -> AccountId
     -> m CAddress
-newWAddress addGenSeed passphrase accId = do
+newAddress addGenSeed passphrase accId = do
     -- check wallet exists
     _ <- getAccount accId
 
@@ -725,7 +725,7 @@ newAccount addGenSeed passphrase CAccountInit {..} = do
 
     cAddr <- genUniqueAccountId addGenSeed caInitWId
     createAccount cAddr caInitMeta
-    () <$ newWAddress addGenSeed passphrase cAddr
+    () <$ newAddress addGenSeed passphrase cAddr
     getAccount cAddr
 
 createWalletSafe
@@ -1030,7 +1030,7 @@ importWalletSecret passphrase WalletUserSecret{..} = do
 
     for_ _wusAddrs $ \(walletIndex, accountIndex) -> do
         let accId = AccountId wid walletIndex
-        newWAddress (DeterminedSeed accountIndex) passphrase accId
+        newAddress (DeterminedSeed accountIndex) passphrase accId
 
     selectAccountsFromUtxoLock @WalletSscType [key]
 
