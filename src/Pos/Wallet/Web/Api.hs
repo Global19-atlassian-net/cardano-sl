@@ -67,7 +67,7 @@ import           Servant.Server             (Handler (..))
 import           Universum
 
 import           Pos.Types                  (Coin, SoftwareVersion)
-import           Pos.Util.Servant           (CCapture, CQueryParam, CReqBody,
+import           Pos.Util.Servant           (CCapture, CReqBody, DCQueryParam,
                                              ModifiesApiRes (..), ReportDecodeError (..),
                                              VerbMod)
 import           Pos.Wallet.Web.ClientTypes (Addr, CAccount, CAccountId, CAccountInit,
@@ -99,7 +99,6 @@ instance ReportDecodeError (WalletVerb (Verb (mt :: k1) (st :: Nat) (ct :: [*]) 
 -- | Shortcut for common api result types.
 type WRes verbType a = WalletVerb (verbType '[JSON] a)
 
-
 -- All endpoints are defined as a separate types, for description in Swagger-based HTML-documentation.
 
 type TestReset =
@@ -126,7 +125,7 @@ type NewWalletSet =
        "wallets"
     :> "sets"
     :> "new"
-    :> CQueryParam "passphrase" CPassPhrase
+    :> DCQueryParam "passphrase" CPassPhrase
     :> ReqBody '[JSON] CWalletInit
     :> WRes Post CWallet
 
@@ -134,7 +133,7 @@ type RestoreWalletSet =
        "wallets"
     :> "sets"
     :> "restore"
-    :> CQueryParam "passphrase" CPassPhrase
+    :> DCQueryParam "passphrase" CPassPhrase
     :> ReqBody '[JSON] CWalletInit
     :> WRes Post CWallet
 
@@ -156,7 +155,7 @@ type ImportWalletSet =
        "wallets"
     :> "sets"
     :> "keys"
-    :> CQueryParam "passphrase" CPassPhrase
+    :> DCQueryParam "passphrase" CPassPhrase
     :> ReqBody '[JSON] Text
     :> WRes Post CWallet
 
@@ -165,8 +164,8 @@ type ChangeWalletSetPassphrase =
     :> "sets"
     :> "password"
     :> Capture "walletSetId" (CId Wal)
-    :> CQueryParam "old" CPassPhrase
-    :> CQueryParam "new" CPassPhrase
+    :> DCQueryParam "old" CPassPhrase
+    :> DCQueryParam "new" CPassPhrase
     :> WRes Post ()
 
 -------------------------------------------------------------------------
@@ -191,7 +190,7 @@ type UpdateWallet =
 
 type NewWallet =
        "wallets"
-    :> CQueryParam "passphrase" CPassPhrase
+    :> DCQueryParam "passphrase" CPassPhrase
     :> ReqBody '[JSON] CAccountInit
     :> WRes Post CAccount
 
@@ -206,7 +205,7 @@ type DeleteWallet =
 
 type NewAccount =
        "account"
-    :> CQueryParam "passphrase" CPassPhrase
+    :> DCQueryParam "passphrase" CPassPhrase
     :> CReqBody '[JSON] CAccountId
     :> WRes Post CAddress
 
@@ -240,7 +239,7 @@ type UpdateProfile =
 type NewPayment =
        "txs"
     :> "payments"
-    :> CQueryParam "passphrase" CPassPhrase
+    :> DCQueryParam "passphrase" CPassPhrase
     :> CCapture "from" CAccountId
     :> Capture "to" (CId Addr)
     :> Capture "amount" Coin
@@ -249,7 +248,7 @@ type NewPayment =
 type NewPaymentExt =
        "txs"
     :> "payments"
-    :> CQueryParam "passphrase" CPassPhrase
+    :> DCQueryParam "passphrase" CPassPhrase
     :> CCapture "from" CAccountId
     :> Capture "to" (CId Addr)
     :> Capture "amount" Coin
@@ -305,7 +304,7 @@ type ApplyUpdate =
 type RedeemADA =
        "redemptions"
     :> "ada"
-    :> CQueryParam "passphrase" CPassPhrase
+    :> DCQueryParam "passphrase" CPassPhrase
     :> ReqBody '[JSON] CWalletRedeem
     :> WRes Post CTx
 
@@ -313,7 +312,7 @@ type RedeemADAPaperVend =
        "papervend"
     :> "redemptions"
     :> "ada"
-    :> CQueryParam "passphrase" CPassPhrase
+    :> DCQueryParam "passphrase" CPassPhrase
     :> ReqBody '[JSON] CPaperVendWalletRedeem
     :> WRes Post CTx
 
